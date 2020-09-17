@@ -36,7 +36,7 @@ router.post('/signup', async(req, res) => {
 
     } catch (e) {
         console.log(e)
-        res.status(500).send('There was a problem registering your user');
+        res.status(500).send(e);
     }
 });
 
