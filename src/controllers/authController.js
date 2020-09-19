@@ -13,7 +13,7 @@ const userController =  require('./userABCController')
 router.post('/signup', async(req, res) => {
     try {
         // Receiving Data
-        const { username, password,email,lastName,firstName,rfc,photo,phone } = req.body;
+        const { username, password,email,lastName,firstName,rfc,photo,phone,profile } = req.body;
         // Creating a new User
         const user = new User({
             username,
@@ -24,6 +24,7 @@ router.post('/signup', async(req, res) => {
             rfc,
             photo,
             phone,
+            profile,
         });
         user.password = await user.encryptPassword(password);
         await user.save();
@@ -32,11 +33,12 @@ router.post('/signup', async(req, res) => {
             expiresIn: 60 * 60 * 24 // expires in 24 hours
         });
         var _id = user.id
-        res.json({ auth: true, token,any:_id});
+        const perfil = user.profile;   
+        res.json({ auth: true, token,any:_id,perfil: perfil});
 
     } catch (e) {
         console.log(e)
-        res.status(500).send(e);
+        res.status(500).send('There was a problem registering your user');
     }
 });
 
@@ -54,7 +56,8 @@ router.post('/signin', async(req, res) => {
             expiresIn: '24h'
         });
         const _id = user._id ;
-        res.status(200).json({ auth: true, token,any:_id });
+        const perfil = user.profile;       
+        res.status(200).json({ auth: true, token,any:_id, perfil: perfil });
     } catch (e) {
         console.log(e)
         res.status(500).send('There was a problem signin');

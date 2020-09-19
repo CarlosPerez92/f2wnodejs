@@ -10,6 +10,7 @@ const userSchema = new Schema({
     rfc:String,
     photo:String,
     phone:String,
+    profile:String,
 });
 
 userSchema.methods.encryptPassword = async(password) => {
