@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken');
 router.post('/catalogo',async(req, res) => {
     try {
         // Receiving Data
-        const { description } = req.body;
+        const { description,image,color,title } = req.body;
         // Creating a new Description Catalogo
         const descr = new Catalogo({
             description,
