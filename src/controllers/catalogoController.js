@@ -10,7 +10,10 @@ router.post('/catalogo',async(req, res) => {
         const { description } = req.body;
         // Creating a new Description Catalogo
         const descr = new Catalogo({
-            description            
+            description,
+            image,
+            color,
+            title,            
         });
         await descr.save();
         res.json();

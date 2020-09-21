@@ -8,6 +8,7 @@ const userSchema = new Schema({
     rfc:String,
     photo:String,
     phone:String,
+    oficio:String,
 });
 let User = module.exports = model('User', userSchema)
 module.exports.get = function(callback, limit) {
