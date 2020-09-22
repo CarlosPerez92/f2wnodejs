@@ -11,6 +11,7 @@ const userSchema = new Schema({
     photo:String,
     phone:String,
     profile:String,
+    oficio:String,
 });
 
 userSchema.methods.encryptPassword = async(password) => {
