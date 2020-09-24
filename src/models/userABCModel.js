@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model,ObjectId = Schema.ObjectId } = require('mongoose');
 const userSchema = new Schema({
     username: String,
     password: String,
@@ -8,7 +8,7 @@ const userSchema = new Schema({
     rfc:String,
     photo:String,
     phone:String,
-    oficio:String,
+    oficio:ObjectId,
 });
 let User = module.exports = model('User', userSchema)
 module.exports.get = function(callback, limit) {

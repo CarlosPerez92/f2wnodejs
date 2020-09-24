@@ -1,10 +1,13 @@
 const { Router } = require('express');
 const router = Router();
 const UserRequest =  require('../models/userRequestModel');
+const User = require('../models/userModel');
+const mongoose = require("mongoose");
+
 router.post('/userrequest',async(req, res) => {
     try {
         // Receiving Data
-        const { idOficio,idCustom,image,description,title,provider } = req.body;
+        const { idOficio,idCustom,image,description,title,idProvider } = req.body;
         // Creating a new Description Request
         const userrequest = new UserRequest({
             idOficio,
@@ -12,7 +15,7 @@ router.post('/userrequest',async(req, res) => {
             image,
             description, 
             title,
-            provider,          
+            idProvider,          
         });
         await userrequest.save();
         res.json(); 
@@ -22,22 +25,18 @@ router.post('/userrequest',async(req, res) => {
     }
 }); 
 
-router.get('/catalogosOficios', async(req, res) =>{
+router.get('/userOficios/:id', async(req, res) =>{
+    console.log(req.params.id.toString());
     try {
-        const userrequest = await UserRequest.aggregate([
-            /* {
-                $addFields:{
-                    "id":{
-                        $to:"$_id"
-                    }
-                }
-            }, */
+        const userrequest = await User.aggregate([
+                      
+            { $match: { "_id":new mongoose.Types.ObjectId(req.params.id.toString())} },            
             {                 
                 $lookup: 
                 {
-                  from: "userrequests",
-                  localField: "id",// tabla principal 
-                  foreignField: "idOficio",//id join
+                  from: "catalogos",
+                  localField: "oficio",// tabla principal 
+                  foreignField: "_id",//id join
                   as: "lsg"
                 }
               }

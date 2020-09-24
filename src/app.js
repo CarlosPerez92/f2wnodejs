@@ -7,5 +7,5 @@ app.use(express.urlencoded({ extended: true,limit: '50mb',parameterLimit: 100000
 app.use(require('./controllers/authController'));
 app.use(require('./controllers/catalogoController'));
 app.use(require('./controllers/userRequestController'));
-
+app.use(require('./controllers/tmpUserRequestController'));
 module.exports = app;

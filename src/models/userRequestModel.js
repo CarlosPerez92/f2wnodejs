@@ -1,11 +1,11 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model,ObjectId = Schema.ObjectId } = require('mongoose');
 const userRequestSchema = new Schema({
-    idOficio: String,
-    idCustom:String,
+    idOficio: ObjectId,
+    idCustom:ObjectId,
     image:String,
     description:String,
     title:String,
-    provider:String,
+    idProvider:ObjectId,
 });
 let UserRequest = module.exports = model('UserRequest', userRequestSchema)
 
