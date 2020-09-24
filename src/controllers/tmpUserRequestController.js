@@ -84,8 +84,7 @@ router.get('/tmpuserrequest/:id', async(req, res) =>{
             }
           },          
              {$project: {
-                _id: 1,
-                
+                _id: 1,                
                 tmpReq:"$tmpReq",
                 idProvider: "$provider._id" ,
                 nameProvider: "$provider.username",
