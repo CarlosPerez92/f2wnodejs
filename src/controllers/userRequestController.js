@@ -74,22 +74,14 @@ router.get('/userOficios/:id', async(req, res) =>{
                   path: "$request",
                   preserveNullAndEmptyArrays: false
                 }
-             },/* {
-                $group:{
-                    _id : "$_id",
-                    _idOficio:{$push :"$oficios._id"},
-                    _description:{$push :"$oficios.description"},
-                    _request:{$push :"$request"},
-                }
-             }
-             ,
+             },             
              {$project: {
                 _id: 1,
-                _idOficio:"$_idOficio",
-                _description:"$_description",
-                request:"$_request",
+                idOficio:"$idOficio",
+                description:"$description",
+                request:"$request",
               },
-             } */
+             }
         ]);
         if (!userrequest) {
             return res.status(404).send("The User Request doesn't exists")
