@@ -5,7 +5,7 @@ const userRequestSchema = new Schema({
     image:String,
     description:String,
     title:String,
-    idProvider:String,
+    idProvider:ObjectId,
 });
 let UserRequest = module.exports = model('UserRequest', userRequestSchema)
 

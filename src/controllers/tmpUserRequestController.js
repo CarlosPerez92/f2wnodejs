@@ -57,14 +57,50 @@ router.get('/tmpuserrequest/:id', async(req, res) =>{
                   preserveNullAndEmptyArrays: true
                 }
               },
+              {                 
+                $lookup: 
+                {
+                  from: "tmpuserrequests",
+                  localField: "request._id",// tabla principal 
+                  foreignField: "idUserRequest",//id join
+                  as: "tmpReq"
+                }
+            },
+            {
+              $unwind: {
+                path: "$tmpReq",
+                preserveNullAndEmptyArrays: true
+              }
+            },
+            {                 
+              $lookup: 
+              {
+                from: "users",
+                localField: "tmpReq.idProvider",// tabla principal 
+                foreignField: "_id",//id join
+                as: "provider"
+              }
+          },
+          {
+            $unwind: {
+              path: "$provider",
+              preserveNullAndEmptyArrays: true
+            }
+          },
               {
                 $group: {
                   _id : "$_id",
                   usernme: { $first: "$username" },
                   profile: { $first: "$profile" },
                   idOficio: { $push: "$request.idOficio" },
-                  description: { $push: "$request.description" },
-                  oficios: { $push: "$oficios.description" }
+                  description: { $push: "$request.description" },                  
+                  oficios: { $push: "$oficios.description" },
+                  idUserRequest: { $push: "$tmpReq.idUserRequest" },
+                  price: { $push: "$tmpReq.price" },
+                  title: { $push: "$request.title" },
+                  image: { $push: "$provider.photo" },
+                  idProvider: { $push: "$provider._id" },
+                  nameProvider:{ $push: "$provider.username"}
                 }
               }
             
