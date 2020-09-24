@@ -8,4 +8,5 @@ app.use(require('./controllers/authController'));
 app.use(require('./controllers/catalogoController'));
 app.use(require('./controllers/userRequestController'));
 app.use(require('./controllers/tmpUserRequestController'));
+app.use(require('./controllers/userOficiosController'));
 module.exports = app;

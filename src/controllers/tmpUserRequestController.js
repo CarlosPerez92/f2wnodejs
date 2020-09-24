@@ -38,8 +38,7 @@ router.get('/tmpuserrequest/:id', async(req, res) =>{
             },
             {
                 $unwind: {
-                  path: "$request",
-                  preserveNullAndEmptyArrays: true
+                  path: "$request",                  
                 }
               },
               {                 
@@ -53,8 +52,7 @@ router.get('/tmpuserrequest/:id', async(req, res) =>{
             },        
             {
                 $unwind: {
-                  path: "$oficios",
-                  preserveNullAndEmptyArrays: true
+                  path: "$oficios",                  
                 }
               },
               {                 
@@ -68,8 +66,7 @@ router.get('/tmpuserrequest/:id', async(req, res) =>{
             },
             {
               $unwind: {
-                path: "$tmpReq",
-                preserveNullAndEmptyArrays: true
+                path: "$tmpReq",                
               }
             },
             {                 
@@ -83,11 +80,21 @@ router.get('/tmpuserrequest/:id', async(req, res) =>{
           },
           {
             $unwind: {
-              path: "$provider",
-              preserveNullAndEmptyArrays: true
+              path: "$provider",              
             }
-          },
-              {
+          },          
+             {$project: {
+                _id: 1,
+                
+                tmpReq:"$tmpReq",
+                idProvider: "$provider._id" ,
+                nameProvider: "$provider.username",
+                imageProvider: "$provider.photo" ,
+                oficios:"$oficios",
+                request:"$request",
+              },
+             } 
+              /* {
                 $group: {
                   _id : "$_id",
                   usernme: { $first: "$username" },
@@ -103,7 +110,7 @@ router.get('/tmpuserrequest/:id', async(req, res) =>{
                   nameProvider:{ $push: "$provider.username"}
                 }
               }
-            
+             */
         ]);
         if (!userrequest) {
             return res.status(404).send("The User Request doesn't exists")

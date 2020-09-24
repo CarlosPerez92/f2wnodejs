@@ -34,12 +34,62 @@ router.get('/userOficios/:id', async(req, res) =>{
             {                 
                 $lookup: 
                 {
-                  from: "catalogos",
-                  localField: "oficio",// tabla principal 
-                  foreignField: "_id",//id join
-                  as: "lsg"
+                  from: "useroficios",
+                  localField: "_id",// tabla principal 
+                  foreignField: "idProvider",//id join
+                  as: "provider"
                 }
-              }
+            },
+            {
+                $unwind: {
+                  path: "$provider",
+                  preserveNullAndEmptyArrays: false
+                }
+             },
+             {
+                $lookup: 
+                {
+                  from: "catalogos",
+                  localField: "provider.idOficio",// tabla principal 
+                  foreignField: "_id",//id join
+                  as: "oficios"
+                }
+             },
+             {
+                $unwind: {
+                  path: "$oficios",
+                  preserveNullAndEmptyArrays: false
+                }
+             },
+             {
+                $lookup: 
+                {
+                  from: "userrequests",
+                  localField: "oficios._id",// tabla principal 
+                  foreignField: "idOficio",//id join
+                  as: "request"
+                }
+             },{
+                $unwind: {
+                  path: "$request",
+                  preserveNullAndEmptyArrays: false
+                }
+             },/* {
+                $group:{
+                    _id : "$_id",
+                    _idOficio:{$push :"$oficios._id"},
+                    _description:{$push :"$oficios.description"},
+                    _request:{$push :"$request"},
+                }
+             }
+             ,
+             {$project: {
+                _id: 1,
+                _idOficio:"$_idOficio",
+                _description:"$_description",
+                request:"$_request",
+              },
+             } */
         ]);
         if (!userrequest) {
             return res.status(404).send("The User Request doesn't exists")
