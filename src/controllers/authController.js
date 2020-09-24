@@ -9,7 +9,6 @@ const config = require('../config');
 
 const userController =  require('./userABCController')
 
-
 router.post('/signup', async(req, res) => {
     try {
         // Receiving Data

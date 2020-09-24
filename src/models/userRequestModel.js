@@ -4,5 +4,12 @@ const userRequestSchema = new Schema({
     idCustom:String,
     image:String,
     description:String,
+    title:String,
+    provider:String,
 });
-module.exports = model('UserRequest', userRequestSchema)
+let UserRequest = module.exports = model('UserRequest', userRequestSchema)
+
+module.exports.get = function(callback, limit) {
+    UserRequest.find(callback).limit(limit);
+}
+
