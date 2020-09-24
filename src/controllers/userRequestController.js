@@ -77,8 +77,8 @@ router.get('/userOficios/:id', async(req, res) =>{
              },             
              {$project: {
                 _id: 1,
-                idOficio:"$idOficio",
-                description:"$description",
+                provider:"$provider",
+                oficios:"$oficios",
                 request:"$request",
               },
              }
