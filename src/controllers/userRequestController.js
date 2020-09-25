@@ -7,7 +7,7 @@ const mongoose = require("mongoose");
 router.post('/userrequest',async(req, res) => {
     try {
         // Receiving Data
-        const { idOficio,idCustom,image,description,title,idProvider,status } = req.body;
+        const { idOficio,idCustom,image,description,title,idProvider } = req.body;
         // Creating a new Description Request
         const userrequest = new UserRequest({
             idOficio,
@@ -15,8 +15,7 @@ router.post('/userrequest',async(req, res) => {
             image,
             description, 
             title,
-            idProvider, 
-            status,                     
+            idProvider,             
         });
         await userrequest.save();
         res.json(); 
@@ -130,6 +129,38 @@ router.get('/userrequest/:id', async(req, res) =>{
   }
 }); 
 
+router.put('/userrequest/:id', async(req, res) =>{
+  console.log(req.params.id.toString());
+  try {
+      UserRequest.findById(req.params.id, function(err, userrequest) {
+        if (err)
+            res.json({
+                status: 'err',
+                code: 500,
+                message: err
+            })
+            userrequest.idProvider = req.body.idProvider 
+            console.log(req.body.idProvider);                       
+            userrequest.save(function(err) {
+            if (err)
+                res.json({
+                    status: 'err',
+                    code: 500,
+                    message: err
+                })
+            res.json({
+                status: 'success',
+                code: 200,
+                message: 'Registro actualizado',
+                data: userrequest
+            })
+        })
+    });      
+  } catch (e) {
+      console.log(e)
+      res.status(500).send('There was a problem userRequest' + e);
+  }
+}); 
 
 
 module.exports = router; 
