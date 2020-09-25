@@ -108,42 +108,14 @@ router.get('/tmpuserrequest/:id', async(req, res) =>{
 router.get('/tmpusterrequestnotificacion/:id',async(req, res) => {
   console.log(req.params.id.toString());
   try {
-    const userrequest = await User.aggregate([
+    const userrequest = await TmpUserRequest.aggregate([
                       
-      { $match: { "_id":new mongoose.Types.ObjectId(req.params.id.toString())} },            
-      {                 
-          $lookup: 
-          {
-            from: "userrequests",
-            localField: "_id",// tabla principal 
-            foreignField: "idCustom",//id join
-            as: "request"
-          }
-      },
-      {
-          $unwind: {
-            path: "$request",                  
-          }
-        },                
-        {                 
-          $lookup: 
-          {
-            from: "tmpuserrequests",
-            localField: "request._id",// tabla principal 
-            foreignField: "idUserRequest",//id join
-            as: "tmpReq"
-          }
-      },
-      {
-        $unwind: {
-          path: "$tmpReq",                
-        }
-      },
+      { $match: { "idUserRequest":new mongoose.Types.ObjectId(req.params.id.toString())} },      
       {                 
         $lookup: 
         {
           from: "users",
-          localField: "tmpReq.idProvider",// tabla principal 
+          localField: "idProvider",// tabla principal 
           foreignField: "_id",//id join
           as: "provider"
         }
@@ -155,7 +127,7 @@ router.get('/tmpusterrequestnotificacion/:id',async(req, res) => {
     },          
        {$project: {
           _id: 1,                
-          tmpReq:"$tmpReq",
+          tmpReq:"$price",
           idProvider: "$provider._id" ,
           nameProvider: "$provider.username",
           imageProvider: "$provider.photo" ,          
