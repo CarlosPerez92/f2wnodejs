@@ -96,22 +96,9 @@ router.get('/userOficios/:id', async(req, res) =>{
 router.get('/userrequest/:id', async(req, res) =>{
   console.log(req.params.id.toString());
   try {
-      const userrequest = await User.aggregate([
+      const userrequest = await UserRequest.aggregate([
                     
-          { $match: { "_id":new mongoose.Types.ObjectId(req.params.id.toString())} },            
-          {
-            $lookup: 
-            {
-              from: "userrequests",
-              localField: "_id",// tabla principal 
-              foreignField: "idCustom",//id join
-              as: "request"
-            }
-         },                      
-           {$project: {              
-              request:"$request",
-            },
-           }
+          { $match: { "idCustom":new mongoose.Types.ObjectId(req.params.id.toString())} },                                                     
       ]);
       if (!userrequest) {
           return res.status(404).send("The User Request doesn't exists")
