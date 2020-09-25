@@ -7,7 +7,7 @@ const mongoose = require("mongoose");
 router.post('/userrequest',async(req, res) => {
     try {
         // Receiving Data
-        const { idOficio,idCustom,image,description,title,idProvider } = req.body;
+        const { idOficio,idCustom,image,description,title,idProvider,status } = req.body;
         // Creating a new Description Request
         const userrequest = new UserRequest({
             idOficio,
@@ -15,7 +15,8 @@ router.post('/userrequest',async(req, res) => {
             image,
             description, 
             title,
-            idProvider,          
+            idProvider, 
+            status,                     
         });
         await userrequest.save();
         res.json(); 
@@ -39,7 +40,7 @@ router.get('/userOficios/:id', async(req, res) =>{
                   foreignField: "idProvider",//id join
                   as: "provider"
                 }
-            },
+            },           
             {
                 $unwind: {
                   path: "$provider",
@@ -61,7 +62,8 @@ router.get('/userOficios/:id', async(req, res) =>{
                   preserveNullAndEmptyArrays: false
                 }
              },
-             {
+             
+          {
                 $lookup: 
                 {
                   from: "userrequests",
@@ -74,14 +76,32 @@ router.get('/userOficios/:id', async(req, res) =>{
                   path: "$request",
                   preserveNullAndEmptyArrays: false
                 }
-             },             
+             },  
+             {                 
+              $lookup: 
+              {
+                from: "tmpuserrequests",
+                localField: "request._id",// tabla principal 
+                foreignField: "idUserRequest",//id join
+                as: "tmpReq"
+              }
+          },
+          {
+            $unwind: {
+              path: "$tmpReq",
+              preserveNullAndEmptyArrays: false
+            },            
+         }, 
+         { $addFields: { "result": {$ne:  [ "$tmpReq.idProvider", "$_id" ]  } }}   ,                     
              {$project: {
-                _id: 1,
+                _id: 1,                
                 provider:"$provider",
                 oficios:"$oficios",
-                request:"$request",
+                request:"$request",                                  
+                result:"$result",
               },
-             }
+             }   ,
+             { $match: { "result":true} },           
         ]);
         if (!userrequest) {
             return res.status(404).send("The User Request doesn't exists")
@@ -109,5 +129,7 @@ router.get('/userrequest/:id', async(req, res) =>{
       res.status(500).send('There was a problem userRequest' + e);
   }
 }); 
+
+
 
 module.exports = router; 
