@@ -194,5 +194,21 @@ router.put('/userrequestStatus/:id', async(req, res) =>{
   }
 });
 
+router.get('/providerrequestnotificacion/:id', async(req, res) =>{
+  try {
+    const userrequest = await UserRequest.aggregate([
+                  
+        { $match: { "idProvider":req.params.id.toString()} },                                                     
+    ]);
+    if (!userrequest) {
+        return res.status(404).send("The User Request doesn't exists")
+    }               
+    res.status(200).json({userrequest});        
+  } catch (e) {
+    console.log(e)
+    res.status(500).send('There was a problem userRequest' + e);
+  }
+}); 
+
 
 module.exports = router; 
