@@ -198,7 +198,14 @@ router.get('/providerrequestnotificacion/:id', async(req, res) =>{
   try {
     const userrequest = await UserRequest.aggregate([
                   
-        { $match: { "idProvider":req.params.id.toString()} },                                                     
+        { $match: { "idProvider":req.params.id.toString()} },   
+        {$project: {
+          _id: 1,                
+          title:"title",
+          description:"description",
+          image:"image",
+        },
+       }                                                    
     ]);
     if (!userrequest) {
         return res.status(404).send("The User Request doesn't exists")
