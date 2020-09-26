@@ -201,9 +201,9 @@ router.get('/providerrequestnotificacion/:id', async(req, res) =>{
         { $match: { "idProvider":req.params.id.toString()} },   
         {$project: {
           _id: 1,                
-          title:"title",
-          description:"description",
-          image:"image",
+          title:"$title",
+          description:"$description",
+          image:"$image",
         },
        }                                                    
     ]);
