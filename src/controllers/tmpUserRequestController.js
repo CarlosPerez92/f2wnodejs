@@ -144,4 +144,20 @@ router.get('/tmpusterrequestnotificacion/:id',async(req, res) => {
   }
 }); 
 
+router.post('/deletetmpuserrequest/:id', function(req, res, next) {
+  try {
+    // Receiving Data
+    var myquery = { idUserRequest : new mongoose.Types.ObjectId(req.params.id.toString())};
+
+    console.log(myquery);
+    TmpUserRequest.deleteMany(myquery, function(err, obj) {      
+      console.log("1 document deleted");      
+    });
+    res.status(200).json();
+} catch (e) {
+    console.log(e)
+    res.status(500).send('There was a problem registering your User Request');
+}
+});
+
 module.exports = router; 

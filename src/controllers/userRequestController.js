@@ -160,7 +160,39 @@ router.put('/userrequest/:id', async(req, res) =>{
       console.log(e)
       res.status(500).send('There was a problem userRequest' + e);
   }
-}); 
+});
+
+router.put('/userrequestStatus/:id', async(req, res) =>{
+  console.log(req.params.id.toString());
+  try {
+      UserRequest.remove(req.params.id, function(err, userrequest) {
+        if (err)
+            res.json({
+                status: 'err',
+                code: 500,
+                message: err
+            })
+            userrequest.status = req.body.status                                 
+            userrequest.save(function(err) {
+            if (err)
+                res.json({
+                    status: 'err',
+                    code: 500,
+                    message: err
+                })
+            res.json({
+                status: 'success',
+                code: 200,
+                message: 'Registro actualizado',
+                data: userrequest
+            })
+        })
+    });      
+  } catch (e) {
+      console.log(e)
+      res.status(500).send('There was a problem userRequest' + e);
+  }
+});
 
 
 module.exports = router; 
