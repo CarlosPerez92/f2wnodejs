@@ -35,7 +35,7 @@ router.get('/userOficios/:id', async(req, res) =>{
                 $lookup: 
                 {
                   from: "useroficios",
-                  localField: "idProvider",// tabla principal 
+                  localField: "_id",// tabla principal 
                   foreignField: "idProvider",//id join
                   as: "provider"
                 }
@@ -91,7 +91,7 @@ router.get('/userOficios/:id', async(req, res) =>{
               preserveNullAndEmptyArrays: false
             },            
          }, 
-         { $addFields: { "result": {$ne:  [ "$tmpReq.idProvider", "$_id" ]  } }}   ,                     
+                            
              {$project: {
                 _id: 1,                
                 provider:"$provider",
@@ -100,7 +100,7 @@ router.get('/userOficios/:id', async(req, res) =>{
                 result:"$result",
               },
              }   ,
-             { $match: { "result":true} },           
+                      
         ]);
         if (!userrequest) {
             return res.status(404).send("The User Request doesn't exists")
