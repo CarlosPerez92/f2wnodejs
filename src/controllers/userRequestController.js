@@ -35,7 +35,7 @@ router.get('/userOficios/:id', async(req, res) =>{
                 $lookup: 
                 {
                   from: "useroficios",
-                  localField: "_id",// tabla principal 
+                  localField: "idProvider",// tabla principal 
                   foreignField: "idProvider",//id join
                   as: "provider"
                 }
