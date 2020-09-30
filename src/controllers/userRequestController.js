@@ -30,78 +30,81 @@ router.get('/userOficios/:id', async(req, res) =>{
     try {
         const userrequest = await User.aggregate([
                       
-            { $match: { "_id":new mongoose.Types.ObjectId(req.params.id.toString())} },            
-            {                 
-                $lookup: 
-                {
-                  from: "useroficios",
-                  localField: "_id",// tabla principal 
-                  foreignField: "idProvider",//id join
-                  as: "provider"
-                }
-            },           
+          { $match: { "_id":new mongoose.Types.ObjectId(req.params.id.toString())} },   
+          {                 
+            $lookup: 
             {
-                $unwind: {
-                  path: "$provider",
-                  preserveNullAndEmptyArrays: false
-                }
-             },
-             {
-                $lookup: 
-                {
-                  from: "catalogos",
-                  localField: "provider.idOficio",// tabla principal 
-                  foreignField: "_id",//id join
-                  as: "oficios"
-                }
-             },
-             {
-                $unwind: {
-                  path: "$oficios",
-                  preserveNullAndEmptyArrays: false
-                }
-             },
-             
-          {
-                $lookup: 
-                {
-                  from: "userrequests",
-                  localField: "oficios._id",// tabla principal 
-                  foreignField: "idOficio",//id join
-                  as: "request"
-                }
-             },{
-                $unwind: {
-                  path: "$request",
-                  preserveNullAndEmptyArrays: false
-                }
-             },  
-             {                 
-              $lookup: 
-              {
-                from: "tmpuserrequests",
-                localField: "request._id",// tabla principal 
-                foreignField: "idUserRequest",//id join
-                as: "tmpReq"
-              }
-          },
-          {
-            $unwind: {
-              path: "$tmpReq",
-              preserveNullAndEmptyArrays: false
-            },            
-         }, 
-         { $addFields: { "result": {$ne:  [ "$tmpReq.idProvider", "$_id" ]  } }}   ,                     
-             {$project: {
-                _id: 1,                
-                provider:"$provider",
-                oficios:"$oficios",
-                request:"$request",                                  
-                result:"$result",
-              },
-             }   ,
-             { $match: { "result":true} },           
-        ]);
+              from: "useroficios",
+              localField: "_id",// tabla principal 
+              foreignField: "idProvider",//id join
+              as: "provider"
+            }
+        },      
+        {
+          $unwind: {
+            path: "$provider",
+            preserveNullAndEmptyArrays: false
+          }
+       },   
+       {
+        $lookup: 
+        {
+          from: "catalogos",
+          localField: "provider.idOficio",// tabla principal 
+          foreignField: "_id",//id join
+          as: "oficios"
+        }
+      },
+      {
+          $unwind: {
+            path: "$oficios",
+            preserveNullAndEmptyArrays: false
+          }
+      },  
+      {
+        $lookup: 
+        {
+          from: "userrequests",
+          localField: "oficios._id",// tabla principal 
+          foreignField: "idOficio",//id join
+          as: "request"
+        }
+      },
+      {
+        $unwind: {
+          path: "$request",
+          preserveNullAndEmptyArrays: false
+        }
+      },  
+      {                 
+        $lookup: 
+        {
+          from: "tmpuserrequests",
+          localField: "request._id",// tabla principal 
+          foreignField: "idUserRequest",//id join
+          as: "tmpReq"
+        }
+      },
+      {
+        $unwind: {
+          path: "$tmpReq",
+          preserveNullAndEmptyArrays: true
+        },            
+      }, 
+      { $addFields: { "result": {$ne:  [ "$tmpReq.idProvider", "$_id" ]  } }}   ,
+      {
+        $project: {
+          _id: 1,   
+          provider:"$provider" ,
+          oficios:"$oficios" ,
+          request:"$request",
+          tmpReq:"$tmpReq",
+          result:"$result",
+         },
+      },  
+      { $match: { "result":true} }, 
+                      
+    ]);
         if (!userrequest) {
             return res.status(404).send("The User Request doesn't exists")
         }               
