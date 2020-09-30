@@ -61,11 +61,26 @@ router.get('/userOficios/:id', async(req, res) =>{
               preserveNullAndEmptyArrays: false
             }
          },
+         {
+          $lookup: 
+          {
+            from: "userrequests",
+            localField: "oficios._id",// tabla principal 
+            foreignField: "idOficio",//id join
+            as: "request"
+          }
+       },{
+          $unwind: {
+            path: "$request",
+            preserveNullAndEmptyArrays: false
+          }
+       },  
           {
             $project: {
               _id: 1,
               provider:"$provider",
               oficios:"$oficios",
+              request:"$request",
             },
           }   ,
                       
