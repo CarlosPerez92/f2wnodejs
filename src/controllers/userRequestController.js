@@ -31,8 +31,27 @@ router.get('/userOficios/:id', async(req, res) =>{
         const userrequest = await User.aggregate([
                       
           { $match: { "_id":new mongoose.Types.ObjectId(req.params.id.toString())} },      
-        
-      
+          {                 
+            $lookup: 
+            {
+              from: "useroficios",
+              localField: "_id",// tabla principal 
+              foreignField: "idProvider",//id join
+              as: "provider"
+            }
+          },           
+         {
+            $unwind: {
+              path: "$provider",
+              preserveNullAndEmptyArrays: false
+            }
+          },
+          {
+            $project: {
+              _id: 1,
+              provider:"$provider",
+            },
+          }   ,
                       
     ]);
         if (!userrequest) {
