@@ -9,4 +9,5 @@ app.use(require('./controllers/catalogoController'));
 app.use(require('./controllers/userRequestController'));
 app.use(require('./controllers/tmpUserRequestController'));
 app.use(require('./controllers/userOficiosController'));
+app.use(require('./controllers/notificationController'));
 module.exports = app;
