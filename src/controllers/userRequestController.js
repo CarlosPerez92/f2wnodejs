@@ -75,14 +75,32 @@ router.get('/userOficios/:id', async(req, res) =>{
             preserveNullAndEmptyArrays: false
           }
        },  
+       {                 
+            $lookup: 
+            {
+              from: "tmpuserrequests",
+              localField: "request._id",// tabla principal 
+              foreignField: "idUserRequest",//id join
+              as: "tmpReq"
+            }
+        },
+            {
+              $unwind: {
+                path: "$tmpReq",
+                preserveNullAndEmptyArrays: true
+              },            
+          }, 
+          { $addFields: { "result": {$ne:  [ "$tmpReq.idProvider", "$_id" ]  } }}   ,
           {
             $project: {
               _id: 1,
               provider:"$provider",
               oficios:"$oficios",
               request:"$request",
+              result:"$result",
             },
-          }   ,
+          } ,
+          { $match: { "result":true} },  
                       
     ]);
         if (!userrequest) {
