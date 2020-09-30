@@ -30,62 +30,9 @@ router.get('/userOficios/:id', async(req, res) =>{
     try {
         const userrequest = await User.aggregate([
                       
-          { $match: { "_id":new mongoose.Types.ObjectId(req.params.id.toString())} },   
-          {                 
-            $lookup: 
-            {
-              from: "useroficios",
-              localField: "_id",// tabla principal 
-              foreignField: "idProvider",//id join
-              as: "provider"
-            }
-        },      
-        {
-          $unwind: {
-            path: "$provider",
-            preserveNullAndEmptyArrays: false
-          }
-       },   
-       {
-        $lookup: 
-        {
-          from: "catalogos",
-          localField: "provider.idOficio",// tabla principal 
-          foreignField: "_id",//id join
-          as: "oficios"
-        }
-      },
-      {
-          $unwind: {
-            path: "$oficios",
-            preserveNullAndEmptyArrays: false
-          }
-      },  
-      {
-        $lookup: 
-        {
-          from: "userrequests",
-          localField: "oficios._id",// tabla principal 
-          foreignField: "idOficio",//id join
-          as: "request"
-        }
-      },
-      {
-        $unwind: {
-          path: "$request",
-          preserveNullAndEmptyArrays: false
-        }
-      },  
+          { $match: { "_id":new mongoose.Types.ObjectId(req.params.id.toString())} },      
+        
       
-      {
-        $project: {
-          _id: 1,   
-          provider:"$provider" ,
-          oficios:"$oficios" ,
-          request:"$request",          
-          result:"$result",
-         },
-      },        
                       
     ]);
         if (!userrequest) {
