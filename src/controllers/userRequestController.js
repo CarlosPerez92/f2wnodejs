@@ -47,9 +47,25 @@ router.get('/userOficios/:id', async(req, res) =>{
             }
           },
           {
+            $lookup: 
+            {
+              from: "catalogos",
+              localField: "provider.idOficio",// tabla principal 
+              foreignField: "_id",//id join
+              as: "oficios"
+            }
+         },
+         {
+            $unwind: {
+              path: "$oficios",
+              preserveNullAndEmptyArrays: false
+            }
+         },
+          {
             $project: {
               _id: 1,
               provider:"$provider",
+              oficios:"$oficios",
             },
           }   ,
                       
