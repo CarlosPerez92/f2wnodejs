@@ -67,7 +67,7 @@ router.get('/fcmusernotification/:id',async(req, res) => {
       }, 
       {$group: {
         _id : "$_id",
-        token:{$push: "$users.token"},
+        token:{$push: "$users.tokenMobile"},
         title:{$first:"$title"},
         description:{$first:"$description"},
         oficio:{$first:"$catalogos.description"},
@@ -158,8 +158,7 @@ router.put('/fcmusernotification/:id', async(req, res) =>{
             res.json({
                 status: 'success',
                 code: 200,
-                message: 'Registro actualizado',
-                data: userrequest
+                message: 'Registro actualizado',                
             })
         })
     });      
