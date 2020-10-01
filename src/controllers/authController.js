@@ -12,7 +12,7 @@ const userController =  require('./userABCController')
 router.post('/signup', async(req, res) => {
     try {
         // Receiving Data
-        const { username, password,email,lastName,firstName,rfc,photo,phone,profile,oficio } = req.body;
+        const { username, password,email,lastName,firstName,rfc,photo,phone,profile,oficio,tokenMobile } = req.body;
         // Creating a new User
         const user = new User({
             username,
@@ -25,6 +25,7 @@ router.post('/signup', async(req, res) => {
             phone,
             profile,
             oficio,
+            tokenMobile,
         });
         user.password = await user.encryptPassword(password);
         await user.save();

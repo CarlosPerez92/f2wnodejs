@@ -2,3 +2,4 @@ node_modules
 README.md
 variables.env
 .vscode
+src/f2ws.json

@@ -12,6 +12,7 @@ const userSchema = new Schema({
     phone:String,
     profile:String,
     oficio:ObjectId,
+    tokenMobile:String,
 });
 
 userSchema.methods.encryptPassword = async(password) => {

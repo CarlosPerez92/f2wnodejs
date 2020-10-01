@@ -16,9 +16,10 @@ router.post('/userrequest',async(req, res) => {
             description, 
             title,
             idProvider,             
-        });
+        });        
+        var _id = userrequest._id;
         await userrequest.save();
-        res.json(); 
+        res.json({ auth: true,any:_id});
     } catch (e) {
         console.log(e)
         res.status(500).send('There was a problem registering your User Request');
