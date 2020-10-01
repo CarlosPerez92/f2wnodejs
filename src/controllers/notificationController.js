@@ -9,6 +9,8 @@ admin.initializeApp({
 );
 
 const Notification = require('../models/userRequestModel');
+const UserRequest = require('../models/userModel');
+
 const mongoose = require("mongoose");
 const { credential } = require('firebase-admin');
 
@@ -134,5 +136,37 @@ admin.messaging().send(message)
   }
 }); 
 
+router.put('/fcmusernotification/:id', async(req, res) =>{
+  console.log(req.params.id.toString());
+  try {
+      UserRequest.findById(req.params.id, function(err, userrequest) {
+        if (err)
+            res.json({
+                status: 'err',
+                code: 500,
+                message: err
+            })
+            userrequest.tokenMobile = req.body.tokenMobile 
+            console.log(req.body.idProvider);                       
+            userrequest.save(function(err) {
+            if (err)
+                res.json({
+                    status: 'err',
+                    code: 500,
+                    message: err
+                })
+            res.json({
+                status: 'success',
+                code: 200,
+                message: 'Registro actualizado',
+                data: userrequest
+            })
+        })
+    });      
+  } catch (e) {
+      console.log(e)
+      res.status(500).send('There was a problem userRequest' + e);
+  }
+});
 
 module.exports = router; 
