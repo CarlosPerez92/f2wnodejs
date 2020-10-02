@@ -168,4 +168,111 @@ router.put('/fcmusernotification/:id', async(req, res) =>{
   }
 });
 
+router.get('/fcmusernotificationcustomer/:id',async(req, res) => {
+  console.log(req.params.id.toString());
+  try {
+    const userrequest = await TmpUserRequest.aggregate([
+      { $match: { "_id":new mongoose.Types.ObjectId(req.params.id.toString())} },
+      {                 
+        $lookup: 
+        {
+          from: "userrequests",
+          localField: "idUserRequest",// tabla principal 
+          foreignField: "_id",//id join
+          as: "request"
+        }
+      }, 
+      {
+        $unwind: {
+          path: "$request",
+          preserveNullAndEmptyArrays: false
+        }
+      },  
+      {                 
+        $lookup: 
+        {
+          from: "users",
+          localField: "request.idCustom",// tabla principal 
+          foreignField: "_id",//id join
+          as: "users"
+        }
+      },  
+      {
+        $unwind: {
+          path: "$users",
+          preserveNullAndEmptyArrays: false
+        }
+      }, 
+      {$project: {
+        _id : "$_id",
+        title:"$request.title",
+        request:"$request.description",
+        price:"$price",
+        token:"$users.tokenMobile"
+        },
+      }
+    ]);
+    if (!userrequest) {
+      return res.status(404).send("The User Request doesn't exists")
+  }          
+  res.status(200).json({userrequest});
+  console.log(userrequest[0]['token'])
+  var registrationTokens = userrequest[0]['token'];  
+  
+  admin.messaging().unsubscribeFromTopic(registrationTokens, 'request')
+  .then(function(response) {
+    // See the MessagingTopicManagementResponse reference documentation
+    // for the contents of response.
+    console.log('Successfully unsubscribed from topic:', response);
+  })
+  .catch(function(error) {
+    console.log('Error unsubscribing from topic:', error);
+  });
+
+  admin.messaging().subscribeToTopic(registrationTokens, 'request')
+  .then(function(response) {
+    // See the MessagingTopicManagementResponse reference documentation
+    // for the contents of response.
+    console.log('Successfully subscribed to topic:', response);
+  })
+  .catch(function(error) {
+    console.log('Error subscribing to topic:', error);
+  }); 
+
+  var topic = 'request';
+
+    
+var topicName = 'request'
+
+var message = {
+  notification: {
+    title: userrequest[0]['request'],
+    body: userrequest[0]['price']
+  },
+  android: {
+    notification: {
+      icon: 'stock_ticker_update',
+      color: '#7e55c3'
+    }
+  },
+  topic: topicName,
+};
+
+admin.messaging().send(message)
+  .then((response) => {
+    // Response is a message ID string.
+    console.log('Successfully sent message:', response);
+  })
+  .catch((error) => {
+    console.log('Error sending message:', error);
+  });
+
+
+  }
+  catch (e) {
+    console.log(e)
+    res.status(500).send('There was a problem userRequest' + e);
+  }
+});
+
 module.exports = router; 
