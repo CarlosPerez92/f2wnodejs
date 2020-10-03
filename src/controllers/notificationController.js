@@ -248,7 +248,7 @@ var topicName = 'request'
 var message = {
   notification: {
     title: userrequest[0]['request'],
-    body: userrequest[0]['price']
+    body: '$' + userrequest[0]['price']
   },
   android: {
     notification: {
