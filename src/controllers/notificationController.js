@@ -110,8 +110,7 @@ var topicName = 'request'
 var message = {
   notification: {
     title: userrequest[0]['oficio'],
-    body: userrequest[0]['title'],
-    click_action: 'FLUTTER_NOTIFICATION_CLICK'
+    body: userrequest[0]['title']
   },
   android: {
     notification: {
