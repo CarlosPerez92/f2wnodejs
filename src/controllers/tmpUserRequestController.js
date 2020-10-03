@@ -15,7 +15,8 @@ router.post('/tmpuserrequest',async(req, res) => {
             price,           
         });
         await tmpuserrequest.save();
-        res.json(); 
+        var _id = tmpuserrequest._id;
+        res.json({ auth: true,any:_id});
     } catch (e) {
         console.log(e)
         res.status(500).send('There was a problem registering your User Request');
