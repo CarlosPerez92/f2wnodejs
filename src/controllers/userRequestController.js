@@ -241,7 +241,7 @@ router.get('/providerrequestnotificacion/:id', async(req, res) =>{
           username :"$users.username",
           firstname:"$users.firstName",
           lastname:"$users.lastName",
-          phone:"$users.lastName",
+          phone:"$users.phone",
         },
        }                                                    
     ]);
