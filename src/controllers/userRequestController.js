@@ -141,7 +141,8 @@ router.put('/userrequest/:id', async(req, res) =>{
                 code: 500,
                 message: err
             })
-            userrequest.idProvider = req.body.idProvider            
+            userrequest.idProvider = req.body.idProvider,
+            userrequest.direccion = req.body.direccion             
             userrequest.save(function(err) {
             if (err)
                 res.json({
