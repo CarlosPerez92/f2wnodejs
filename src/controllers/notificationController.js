@@ -114,7 +114,7 @@ var message = {
   },
   android: {
     notification: {
-      icon: 'https://foo.bar.pizza-monster.png'    
+      icon: 'https://res.cloudinary.com/hzilw1ccp/image/upload/v1601703122/images/f2w_zalcav.png'
     }
   }
     ,
@@ -125,12 +125,12 @@ var message = {
       }
     },
     fcm_options: {
-      image: 'https://foo.bar.pizza-monster.png'
+      image: 'https://res.cloudinary.com/hzilw1ccp/image/upload/v1601703122/images/f2w_zalcav.png'
     }
   },
   webpush: {
     headers: {
-      image: 'https://foo.bar.pizza-monster.png'
+      image: 'https://res.cloudinary.com/hzilw1ccp/image/upload/v1601703122/images/f2w_zalcav.png'
       }
   },  
   topic: topicName,
@@ -267,7 +267,7 @@ var message = {
   },
   android: {
     notification: {
-      icon: 'https://res.cloudinary.com/hzilw1ccp/image/upload/v1601688526/images/icon_tzaxt3.png',      
+      icon: 'https://res.cloudinary.com/hzilw1ccp/image/upload/v1601703122/images/f2w_zalcav.png',      
     }
   },  
   apns: {
@@ -277,12 +277,12 @@ var message = {
       }
     },
     fcm_options: {
-      image: 'https://res.cloudinary.com/hzilw1ccp/image/upload/v1601688526/images/icon_tzaxt3.png'
+      image: 'https://res.cloudinary.com/hzilw1ccp/image/upload/v1601703122/images/f2w_zalcav.png'
     }
   },
   webpush: {
     headers: {
-      image: 'https://res.cloudinary.com/hzilw1ccp/image/upload/v1601688526/images/icon_tzaxt3.png'
+      image: 'https://res.cloudinary.com/hzilw1ccp/image/upload/v1601703122/images/f2w_zalcav.png'
       }
   },
   topic: topicName,
