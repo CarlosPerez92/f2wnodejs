@@ -215,6 +215,21 @@ router.get('/providerrequestnotificacion/:id', async(req, res) =>{
             path: "$catalogos",
             preserveNullAndEmptyArrays: false
           }
+        }, 
+        {                 
+          $lookup: 
+          {
+            from: "users",
+            localField: "idCustom",// tabla principal 
+            foreignField: "_id",//id join
+            as: "users"
+          }
+        }, 
+        {
+          $unwind: {
+            path: "$users",
+            preserveNullAndEmptyArrays: false
+          }
         },  
         {$project: {
           _id: 1,                
@@ -222,7 +237,11 @@ router.get('/providerrequestnotificacion/:id', async(req, res) =>{
           description:"$description",
           image:"$image",
           direccion:"$direccion",  
-          job:"$catalogos.description",        
+          job:"$catalogos.description",  
+          username :"$users.username",
+          firstname:"$users.firstName",
+          lastname:"$users.lastName",
+          phone:"$users.lastName",
         },
        }                                                    
     ]);
