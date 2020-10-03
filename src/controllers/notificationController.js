@@ -114,7 +114,7 @@ var message = {
   },
   android: {
     notification: {
-      icon: 'https://res.cloudinary.com/hzilw1ccp/image/upload/v1601688526/images/icon_tzaxt3.png',     
+      icon: 'https://foo.bar.pizza-monster.png'    
     }
   }
     ,
@@ -125,12 +125,12 @@ var message = {
       }
     },
     fcm_options: {
-      image: 'https://res.cloudinary.com/hzilw1ccp/image/upload/v1601688526/images/icon_tzaxt3.png'
+      image: 'https://foo.bar.pizza-monster.png'
     }
   },
   webpush: {
     headers: {
-      image: 'https://res.cloudinary.com/hzilw1ccp/image/upload/v1601688526/images/icon_tzaxt3.png'
+      image: 'https://foo.bar.pizza-monster.png'
       }
   },  
   topic: topicName,
