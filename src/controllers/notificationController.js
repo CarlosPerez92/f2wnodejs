@@ -110,11 +110,12 @@ var topicName = 'request'
 var message = {
   notification: {
     title: userrequest[0]['oficio'],
-    body: userrequest[0]['title']
+    body: userrequest[0]['title'],
+    click_action: 'FLUTTER_NOTIFICATION_CLICK'
   },
   android: {
     notification: {
-      icon: 'https://res.cloudinary.com/hzilw1ccp/image/upload/v1601703122/images/f2w_zalcav.png'
+      icon: 'https://ibin.co/2t1lLdpfS06F.png'
     }
   }
     ,
@@ -125,12 +126,12 @@ var message = {
       }
     },
     fcm_options: {
-      image: 'https://res.cloudinary.com/hzilw1ccp/image/upload/v1601703122/images/f2w_zalcav.png'
+      image: 'https://ibin.co/2t1lLdpfS06F.png'
     }
   },
   webpush: {
     headers: {
-      image: 'https://res.cloudinary.com/hzilw1ccp/image/upload/v1601703122/images/f2w_zalcav.png'
+      image: 'https://ibin.co/2t1lLdpfS06F.png'
       }
   },  
   topic: topicName,
