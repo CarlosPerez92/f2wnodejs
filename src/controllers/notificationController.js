@@ -114,10 +114,25 @@ var message = {
   },
   android: {
     notification: {
-      icon: 'https://res.cloudinary.com/hzilw1ccp/image/upload/v1601688526/images/icon_tzaxt3.png',
-      color: '#7e55c3'
+      icon: 'https://res.cloudinary.com/hzilw1ccp/image/upload/v1601688526/images/icon_tzaxt3.png',     
+    }
+  }
+    ,
+  apns: {
+    payload: {
+      aps: {
+        'mutable-content': 1
+      }
+    },
+    fcm_options: {
+      image: 'https://res.cloudinary.com/hzilw1ccp/image/upload/v1601688526/images/icon_tzaxt3.png'
     }
   },
+  webpush: {
+    headers: {
+      image: 'https://res.cloudinary.com/hzilw1ccp/image/upload/v1601688526/images/icon_tzaxt3.png'
+      }
+  },  
   topic: topicName,
 };
 
@@ -252,9 +267,23 @@ var message = {
   },
   android: {
     notification: {
-      icon: 'https://res.cloudinary.com/hzilw1ccp/image/upload/v1601688526/images/icon_tzaxt3.png',
-      color: '#7e55c3'
+      icon: 'https://res.cloudinary.com/hzilw1ccp/image/upload/v1601688526/images/icon_tzaxt3.png',      
     }
+  },  
+  apns: {
+    payload: {
+      aps: {
+        'mutable-content': 1
+      }
+    },
+    fcm_options: {
+      image: 'https://res.cloudinary.com/hzilw1ccp/image/upload/v1601688526/images/icon_tzaxt3.png'
+    }
+  },
+  webpush: {
+    headers: {
+      image: 'https://res.cloudinary.com/hzilw1ccp/image/upload/v1601688526/images/icon_tzaxt3.png'
+      }
   },
   topic: topicName,
 };
