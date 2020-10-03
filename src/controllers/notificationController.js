@@ -383,7 +383,7 @@ var topicName = 'request'
 var message = {
   notification: {
     title: 'Request Accept: '+ userrequest[0]['username'],
-    body: 'Title: ' + userrequest[0]['description'] + '\n' + 'Description: '  + userrequest[0]['description'] 
+    body: 'Title: ' + userrequest[0]['title'] + '\n' + 'Description: '  + userrequest[0]['body'] 
   },
   android: {
     notification: {
