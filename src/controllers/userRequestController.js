@@ -142,7 +142,7 @@ router.put('/userrequest/:id', async(req, res) =>{
                 message: err
             })
             userrequest.idProvider = req.body.idProvider 
-            console.log(req.body.idProvider);                       
+            userrequest.direccion = req.body.direccion             
             userrequest.save(function(err) {
             if (err)
                 res.json({
