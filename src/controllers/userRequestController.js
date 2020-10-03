@@ -200,13 +200,29 @@ router.get('/providerrequestnotificacion/:id', async(req, res) =>{
   try {
     const userrequest = await UserRequest.aggregate([
                   
-        { $match: { "idProvider":req.params.id.toString()} },   
+        { $match: { "idProvider":req.params.id.toString()} },  
+        {                 
+          $lookup: 
+          {
+            from: "catalogos",
+            localField: "idOficio",// tabla principal 
+            foreignField: "_id",//id join
+            as: "catalogos"
+          }
+        }, 
+        {
+          $unwind: {
+            path: "$catalogos",
+            preserveNullAndEmptyArrays: false
+          }
+        },  
         {$project: {
           _id: 1,                
           title:"$title",
           description:"$description",
           image:"$image",
-          direccion:"$direccion",          
+          direccion:"$direccion",  
+          job:"$catalogos.description",        
         },
        }                                                    
     ]);
