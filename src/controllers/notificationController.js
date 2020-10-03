@@ -114,7 +114,7 @@ var message = {
   },
   android: {
     notification: {
-      icon: 'https://ibin.co/2t1lLdpfS06F.png'
+      icon: 'https://res.cloudinary.com/hzilw1ccp/image/upload/v1601703122/images/f2w_zalcav.png'
     }
   }
     ,
@@ -125,12 +125,12 @@ var message = {
       }
     },
     fcm_options: {
-      image: 'https://ibin.co/2t1lLdpfS06F.png'
+      image: 'https://res.cloudinary.com/hzilw1ccp/image/upload/v1601703122/images/f2w_zalcav.png'
     }
   },
   webpush: {
     headers: {
-      image: 'https://ibin.co/2t1lLdpfS06F.png'
+      image: 'https://res.cloudinary.com/hzilw1ccp/image/upload/v1601703122/images/f2w_zalcav.png'
       }
   },  
   topic: topicName,
