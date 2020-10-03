@@ -7,6 +7,7 @@ const userRequestSchema = new Schema({
     title:String,
     idProvider:String,
     status: {type:String,default:"0"},
+    direccion:String,
 });
 let UserRequest = module.exports = model('UserRequest', userRequestSchema)
 
