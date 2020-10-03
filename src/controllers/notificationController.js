@@ -114,7 +114,7 @@ var message = {
   },
   android: {
     notification: {
-      icon: 'stock_ticker_update',
+      icon: 'https://res.cloudinary.com/hzilw1ccp/image/upload/v1601688526/images/icon_tzaxt3.png',
       color: '#7e55c3'
     }
   },
@@ -252,7 +252,7 @@ var message = {
   },
   android: {
     notification: {
-      icon: 'stock_ticker_update',
+      icon: 'https://res.cloudinary.com/hzilw1ccp/image/upload/v1601688526/images/icon_tzaxt3.png',
       color: '#7e55c3'
     }
   },
