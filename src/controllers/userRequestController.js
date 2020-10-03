@@ -206,6 +206,7 @@ router.get('/providerrequestnotificacion/:id', async(req, res) =>{
           title:"$title",
           description:"$description",
           image:"$image",
+          direccion:"$direccion",          
         },
        }                                                    
     ]);
