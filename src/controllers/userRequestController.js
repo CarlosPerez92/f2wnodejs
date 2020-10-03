@@ -141,8 +141,7 @@ router.put('/userrequest/:id', async(req, res) =>{
                 code: 500,
                 message: err
             })
-            userrequest.idProvider = req.body.idProvider 
-            userrequest.direccion = req.body.direccion             
+            userrequest.idProvider = req.body.idProvider            
             userrequest.save(function(err) {
             if (err)
                 res.json({
@@ -154,7 +153,6 @@ router.put('/userrequest/:id', async(req, res) =>{
                 status: 'success',
                 code: 200,
                 message: 'Registro actualizado',
-                data: userrequest
             })
         })
     });      
