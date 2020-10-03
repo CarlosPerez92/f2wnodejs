@@ -7,7 +7,7 @@ const mongoose = require("mongoose");
 router.post('/userrequest',async(req, res) => {
     try {
         // Receiving Data
-        const { idOficio,idCustom,image,description,title,idProvider } = req.body;
+        const { idOficio,idCustom,image,description,title,idProvider,direccion } = req.body;
         // Creating a new Description Request
         const userrequest = new UserRequest({
             idOficio,
@@ -15,7 +15,8 @@ router.post('/userrequest',async(req, res) => {
             image,
             description, 
             title,
-            idProvider,             
+            idProvider,
+            direccion,            
         });        
         var _id = userrequest._id;
         await userrequest.save();
